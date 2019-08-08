@@ -5,37 +5,33 @@
 
 'use strict';
 
-import { WebDriver, Builder, until } from 'selenium-webdriver'
+import { WebDriver, Builder, until, Capabilities } from 'selenium-webdriver'
 import { By } from './by';
+import { By as SeleniumBy } from 'selenium-webdriver'
 
 export class AppiumDriver {
-  private static windowsCapabilities(appName: string) {
-    return {
-      browserName: '',
-      platformName: 'windows',
-      deviceName: 'WindowsPC',
-      app: appName
-    };
-  }
-
   driver_: WebDriver;
 
-  static createWinAppDriver(appName: string, url = "http://localhost:4723/wd/hub"): Promise<AppiumDriver> {
-    return new Promise<AppiumDriver>(resolve => {
+  static createAppiumDriver(appCapailities: Capabilities|{}, url = "http://localhost:4723/wd/hub") {
+    return new Promise<AppiumDriver>((resolve, reject) => {
       new Builder()
         .usingServer(url)
-        .withCapabilities(AppiumDriver.windowsCapabilities(appName))
+        .withCapabilities(appCapailities)
         .build().
-        then((driver) => { resolve(new AppiumDriver(driver)); });
+        then(driver => { resolve(new AppiumDriver(driver)); }, reason => reject(reason));
     });
   }
 
-  webDriver(): WebDriver {
+  seleniumWebDriver(): WebDriver {
     return this.driver_;
   }
 
   constructor(driver: WebDriver) {
     this.driver_ = driver;
+  }
+
+  get(by: SeleniumBy, timeout = 0, message = undefined) {
+    this.driver_.wait(until.elementLocated(by), timeout, message);
   }
 
   getByAccessibilityId(id: string, timeout = 0, message = undefined) {

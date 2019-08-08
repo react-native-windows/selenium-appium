@@ -5,3 +5,5 @@
 
 export { By } from './by';
 export { AppiumDriver } from './appiumdriver'
+export { ITestExecutionCallback, AppiumTestFixture } from './appiumtestfixture'
+export { windowsNativeAppCapabilities } from './appiumdriver.windows'
