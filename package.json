@@ -1,6 +1,6 @@
 {
   "name": "selenium-appium",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A brdige to make selenium-webdriver to drive appium to do native app testing",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,14 +11,24 @@
   "scripts": {
     "prepublishOnly": "tsc -p ./ --outDir dist/"
   },
-  "keywords": ["selenium-webdriver", "appium", "jest", "e2e test"],
+  "keywords": [
+    "selenium-webdriver",
+    "appium",
+    "jest",
+    "e2e test"
+  ],
   "author": "Canhua Li",
   "license": "MIT",
   "devDependencies": {
     "@types/selenium-webdriver": "^4.0.1",
-    "typescript": "^3.5.3"   
+    "typescript": "^3.5.3"
   },
   "peerDependencies": {
     "selenium-webdriver": "^4.0.0-alpha.4"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/react-native-windows/selenium-appium/issues"
+  },
+  "homepage": "https://github.com/react-native-windows/selenium-appium#readme",
+  "dependencies": {}
 }
