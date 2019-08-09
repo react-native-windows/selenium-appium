@@ -5,11 +5,21 @@
 
 'use strict';
 
-import { WebDriver, Builder, until, Capabilities } from 'selenium-webdriver'
+import { WebDriver, Builder, until, Capabilities, WebElementPromise } from 'selenium-webdriver'
 import { By } from './by';
 import { By as SeleniumBy } from 'selenium-webdriver'
 
-export class AppiumDriver {
+export interface IAppiumDriver{
+  get(by: SeleniumBy, timeout?: number, message?: string): WebElementPromise;
+  getByAccessibilityId(id: string, timeout?: number, message?: string): WebElementPromise;
+  getByName(name: string, timeout?: number, message?: string): WebElementPromise;
+  getById(id: string, timeout?: number, message?: string): WebElementPromise;
+  getByclassName(className: string, timeout?: number, message?: string): WebElementPromise;
+  sleep(ms: number): Promise<void>;
+  quit(): Promise<void>;
+}
+
+export class AppiumDriver implements IAppiumDriver {
   driver_: WebDriver;
 
   static createAppiumDriver(appCapailities: Capabilities|{}, url = "http://localhost:4723/wd/hub") {
@@ -31,23 +41,23 @@ export class AppiumDriver {
   }
 
   get(by: SeleniumBy, timeout = 0, message = undefined) {
-    this.driver_.wait(until.elementLocated(by), timeout, message);
+    return this.driver_.wait(until.elementLocated(by), timeout, message);
   }
 
   getByAccessibilityId(id: string, timeout = 0, message = undefined) {
-    return this.driver_.wait(until.elementLocated(By.accessibilityId(id)), timeout, message);
+    return this.get(By.accessibilityId(id), timeout, message);
   }
 
   getByName(name: string, timeout = 0, message = undefined) {
-    return this.driver_.wait(until.elementLocated(By.name(name)), timeout, message);
+    return this.get(By.name(name), timeout, message);
   }
 
   getById(id: string, timeout = 0, message = undefined) {
-    return this.driver_.wait(until.elementLocated(By.id(id)), timeout, message);
+    return this.get(By.id(id), timeout, message);
   }
 
   getByclassName(className: string, timeout = 0, message = undefined) {
-    return this.driver_.wait(until.elementLocated(By.className(className)), timeout, message);
+    return this.get(By.className(className), timeout, message);
   }
 
   sleep(ms: number) {

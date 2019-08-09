@@ -5,7 +5,7 @@
 
 'use strict';
 
-import { AppiumDriver } from "./appiumdriver";
+import { AppiumDriver, IAppiumDriver } from "./appiumdriver";
 import { WebDriver, Capabilities } from "selenium-webdriver";
 
 export interface IAppiumTestFixture {
@@ -13,7 +13,7 @@ export interface IAppiumTestFixture {
   stop(): Promise<void>;
   restart(): Promise<void>;
   isActive(): Promise<boolean>;
-  appiumDriver(): AppiumDriver | undefined;
+  appiumDriver(): IAppiumDriver | undefined;
   seleniumDriver(): WebDriver | undefined;
   error(): any;
 };
