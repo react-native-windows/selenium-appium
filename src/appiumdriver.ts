@@ -5,11 +5,11 @@
 
 'use strict';
 import { WebDriver, Builder, until, Capabilities, WebElementPromise } from 'selenium-webdriver'
-import { By } from './by';
-import { By as SeleniumBy } from 'selenium-webdriver'
+import { By2 } from './by2';
+import { By } from 'selenium-webdriver'
 
 interface IAppiumWaitUntilFound {
-  get(by: SeleniumBy, timeout?: number, message?: string): WebElementPromise;
+  get(by: By, timeout?: number, message?: string): WebElementPromise;
   getByAccessibilityId(id: string, timeout?: number, message?: string): WebElementPromise;
   getByName(name: string, timeout?: number, message?: string): WebElementPromise;
   getById(id: string, timeout?: number, message?: string): WebElementPromise;
@@ -28,26 +28,26 @@ export interface IAppiumDriver extends IAppiumWaitUntilFound
 }
 
 class AppiumDriver implements IAppiumDriver {
-  get(by: SeleniumBy, timeout?: number, message?: string | undefined): WebElementPromise {
+  get(by: By, timeout?: number, message?: string | undefined): WebElementPromise {
     if (this.webDriver)
       return this.webDriver.wait(until.elementLocated(by), timeout, message);
     throw new Error("no valid connection");
   }
 
   getByAccessibilityId(id: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
-    return this.get(By.accessibilityId(id), timeout, message);
+    return this.get(By2.accessibilityId(id), timeout, message);
   }
 
   getByName(name: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
-    return this.get(By.name(name), timeout, message);
+    return this.get(By2.name(name), timeout, message);
   }
 
   getById(id: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
-    return this.get(By.id(id), timeout, message);
+    return this.get(By2.id(id), timeout, message);
   }
 
   getByclassName(className: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
-    return this.get(By.className(className), timeout, message);
+    return this.get(By2.className(className), timeout, message);
   }
 
   sleep(ms: number): Promise<void> {
@@ -67,18 +67,18 @@ class AppiumDriver implements IAppiumDriver {
   }
 
   start(): Promise<void> {
-    return new Promise<void>((resolve, reject) => {
+    return new Promise<void>(resolve => {
       new Builder()
         .usingServer(this.url_)
         .withCapabilities(this.capabilities_)
         .build()
-        .then(driver => { this.webDriver = driver })
+        .then(driver => { this.webDriver = driver; resolve(); })
         .catch(e => { this.error_ = e; throw e; });
     });
   }
 
   stop(): Promise<void> {
-    return new Promise<void>((resolve) => {
+    return new Promise<void>(resolve => {
       this.webDriver && this.webDriver
         .quit()
         .then(() => resolve())
@@ -116,6 +116,6 @@ class AppiumDriver implements IAppiumDriver {
   }
 }
 
-export function createAppiumTestFixture(capabilities: Capabilities | {}, url?: string): IAppiumDriver {
+export function createAppiumWebDriver(capabilities: Capabilities | {}, url?: string): IAppiumDriver {
   return new AppiumDriver(capabilities, url);
 }

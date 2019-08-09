@@ -3,6 +3,6 @@
  * Licensed under the MIT License.
  */
 
-export { By } from './by';
-export { IAppiumDriver, createAppiumTestFixture } from './appiumdriver'
+export { By2 } from './by2';
+export { IAppiumDriver, createAppiumWebDriver } from './appiumdriver'
 export { windowsNativeAppCapabilities } from './appiumdriver.windows'

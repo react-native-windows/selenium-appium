@@ -4,23 +4,23 @@
  */
 
 'use strict';
-import { By as SeleniumBy } from 'selenium-webdriver'
+import { By } from 'selenium-webdriver'
 
-export class By {
+export class By2 {
   static id(id: string) {
-    return new SeleniumBy('id', id);
+    return new By('id', id);
   }
 
   static accessibilityId(id: string) {
-    return new SeleniumBy('accessibility id', id);
+    return new By('accessibility id', id);
   }
 
   // @ts-ignore: error TS2699: Static property 'name' conflicts with built-in property 'Function.name'
   static name(name: string) {
-    return new SeleniumBy('name', name);
+    return new By('name', name);
   }
 
   static className(name: string) {
-    return new SeleniumBy('class name', name);
+    return new By('class name', name);
   }
 }
