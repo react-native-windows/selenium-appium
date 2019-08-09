@@ -8,83 +8,79 @@
 import { AppiumDriver } from "./appiumdriver";
 import { WebDriver, Capabilities } from "selenium-webdriver";
 
-export interface ITestExecutionCallback {
-  setupForTest(connection: AppiumTestFixture): Promise<void>;
-  tearDownForTest(connection: AppiumTestFixture): Promise<void>;
-  assertBeforeTest(connection: AppiumTestFixture): Promise<void>;
-}
+export interface IAppiumTestFixture {
+  start(): Promise<void>;
+  stop(): Promise<void>;
+  restart(): Promise<void>;
+  isActive(): Promise<boolean>;
+  appiumDriver(): AppiumDriver | undefined;
+  seleniumDriver(): WebDriver | undefined;
+  error(): any;
+};
 
-export class AppiumTestFixture {
-  private driver_?: AppiumDriver;
-  private capabilities_: Capabilities;
-  private cb_?: ITestExecutionCallback;
-  private error_?: any;
-  private url_?: string
-
-  constructor(capabilities: Capabilities, cb?: ITestExecutionCallback, url?: string) {
-    this.capabilities_ = capabilities;
-    this.cb_ = cb;
-    this.url_ = url;
-  }
-
-  private async setupAppiumDriver() {
-    try {
-      this.driver_ = await AppiumDriver.createAppiumDriver(this.capabilities_, this.url_);
-    }
-    catch (reason) {
-      this.error_ = reason;
-      throw reason;
-    }
-  }
-
-  private async tearDownAppiumDriver() {
-    if (this.driver_ != null) {
-      try {
-        await this.driver_.quit();
-      }
-      catch (e) { }
-      this.driver_ = undefined;
-    }
-  }
-
-  private async isActive(): Promise<boolean> {
-    return (this.driver_ != null && await this.driver_.seleniumWebDriver().getSession() != null);
+class AppiumTestFixture implements IAppiumTestFixture {
+  error() {
+    return this.error_;
   }
 
   appiumDriver(): AppiumDriver | undefined {
     return this.driver_;
   }
-
-  seleniumWebDriver(): WebDriver | null {
-    return this.driver_ != null ? this.driver_.seleniumWebDriver() : null;
+  seleniumDriver(): WebDriver | undefined {
+    if (this.driver_)
+      return this.driver_.seleniumWebDriver();
   }
 
-  beforeAll() {
-    return this.setupAppiumDriver();
+  start(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      AppiumDriver.createAppiumDriver(this.capabilities_, this.url_)
+        .then(driver => { this.driver_ = driver; resolve(); }, reason => { this.error_ = reason; reject(reason); })
+    });
   }
 
-  afterAll() {
-    return this.tearDownAppiumDriver();
+  stop(): Promise<void> {
+    this.error_ = undefined;
+    return new Promise<void>((resolve, reject) => {
+      if (this.driver_) {
+        this.driver_.quit()
+          .then(() => { this.driver_ = undefined; resolve(); }, reason => reject(reason))
+      }
+      else {
+        resolve();
+      }
+    });
   }
 
-  async beforeEach() {
-    if (await this.isActive() && this.cb_) {
-      return await this.cb_.setupForTest(this);
-    }
+  restart(): Promise<void> {
+    return this._restart();
   }
 
-  async afterEach() {
-    if (await this.isActive() && this.cb_) {
-      return await this.cb_.tearDownForTest(this);
-    }
+  private async _restart() {
+    await this.stop();
+    await this.start();
   }
 
-  async assertBeforeTest() {
-    if (!await this.isActive()) {
-      throw new Error("There is no active connection: " + this.error_);
-    }
-    if (this.cb_) {
-      return await this.cb_.assertBeforeTest(this);
-    }
+  private driver_?: AppiumDriver;
+  private capabilities_: Capabilities | {};
+  private error_?: any;
+  private url_?: string
+
+  constructor(capabilities: Capabilities | {}, url?: string) {
+    this.capabilities_ = capabilities;
+    this.url_ = url;
   }
+
+  isActive(): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      if (this.driver_)
+        this.driver_.seleniumWebDriver().getSession().then(() => resolve(), reason => reject(reason))
+      else {
+        return Promise.reject("no connection");
+      }
+    });
+  }
+}
+
+export function createAppiumTestFixture(capabilities: Capabilities | {}, url?: string): IAppiumTestFixture {
+  return new AppiumTestFixture(capabilities, url);
 }
