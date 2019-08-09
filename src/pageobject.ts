@@ -7,6 +7,7 @@ import { WebDriver, WebElementCondition, By } from "selenium-webdriver";
 import { IAppiumDriver } from './appiumdriver';
 
 export interface IPageObject {
+  elementExists(by: By, timeout?: number): Promise<boolean>;
   clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T>;
   gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T>;
   isReadyConditions(): WebElementCondition[];
@@ -17,14 +18,14 @@ function getInstance<T>(type: (new (...args: any[]) => T), ...args: any[]): T {
   return new type(...args);
 };
 
-function gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, timeout?: number): Promise<T> {
+export function gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, timeout?: number): Promise<T> {
   const page = getInstance(type, driver);
   return new Promise<T>((resolve) => {
     page.waitUntilReady(timeout).then(() => resolve(page))
   });
 }
 
-function clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, by: By, timeout?: number): Promise<T> {
+export function clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, by: By, timeout?: number): Promise<T> {
   return new Promise<T>((resolve) => {
     driver.get(by, timeout)
       .then(el => { return el.click(); })
@@ -55,6 +56,14 @@ export class PageObject implements IPageObject {
     this.appiumDriver = dirver;
   }
 
+  elementExists(by: By, timeout?: number): Promise<boolean> {
+    return new Promise<boolean>(resolve =>
+      this.appiumDriver.seleniumDriver().findElement(by)
+        .then(() => resolve(true))
+        .catch(() => resolve(false))
+    );
+  }
+
   isReadyConditions(): WebElementCondition[] {
     throw new Error("Not implemented");
   }
@@ -78,7 +87,9 @@ export class PageObject implements IPageObject {
 
   private static async  waitForConditions(driver: WebDriver, conditions: WebElementCondition[], timeout?: number) {
     for (var i = 0; i < conditions.length; i++) {
-      await driver.wait(conditions[i], timeout);
+      if (conditions[i]) {
+        await driver.wait(conditions[i], timeout);
+      }
     }
   }
 }
