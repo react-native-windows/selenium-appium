@@ -4,6 +4,5 @@
  */
 
 export { By } from './by';
-export { AppiumDriver } from './appiumdriver'
-export { IAppiumTestFixture, createAppiumTestFixture } from './appiumtestfixture'
+export { IAppiumDriver, createAppiumTestFixture } from './appiumdriver'
 export { windowsNativeAppCapabilities } from './appiumdriver.windows'

@@ -4,66 +4,118 @@
  */
 
 'use strict';
-
 import { WebDriver, Builder, until, Capabilities, WebElementPromise } from 'selenium-webdriver'
 import { By } from './by';
 import { By as SeleniumBy } from 'selenium-webdriver'
 
-export interface IAppiumDriver{
+interface IAppiumWaitUntilFound {
   get(by: SeleniumBy, timeout?: number, message?: string): WebElementPromise;
   getByAccessibilityId(id: string, timeout?: number, message?: string): WebElementPromise;
   getByName(name: string, timeout?: number, message?: string): WebElementPromise;
   getById(id: string, timeout?: number, message?: string): WebElementPromise;
   getByclassName(className: string, timeout?: number, message?: string): WebElementPromise;
-  sleep(ms: number): Promise<void>;
-  quit(): Promise<void>;
 }
 
-export class AppiumDriver implements IAppiumDriver {
-  driver_: WebDriver;
+export interface IAppiumDriver extends IAppiumWaitUntilFound 
+{
+  start(): Promise<void>;
+  stop(): Promise<void>;
+  restart(): Promise<void>;
+  isActive(): Promise<boolean>;
+  seleniumDriver(): WebDriver;
+  lastError(): any;
+  sleep(ms: number): Promise<void>;
+}
 
-  static createAppiumDriver(appCapailities: Capabilities|{}, url = "http://localhost:4723/wd/hub") {
-    return new Promise<AppiumDriver>((resolve, reject) => {
-      new Builder()
-        .usingServer(url)
-        .withCapabilities(appCapailities)
-        .build().
-        then(driver => { resolve(new AppiumDriver(driver)); }, reason => reject(reason));
-    });
+class AppiumDriver implements IAppiumDriver {
+  get(by: SeleniumBy, timeout?: number, message?: string | undefined): WebElementPromise {
+    if (this.webDriver)
+      return this.webDriver.wait(until.elementLocated(by), timeout, message);
+    throw new Error("no valid connection");
   }
 
-  seleniumWebDriver(): WebDriver {
-    return this.driver_;
-  }
-
-  constructor(driver: WebDriver) {
-    this.driver_ = driver;
-  }
-
-  get(by: SeleniumBy, timeout = 0, message = undefined) {
-    return this.driver_.wait(until.elementLocated(by), timeout, message);
-  }
-
-  getByAccessibilityId(id: string, timeout = 0, message = undefined) {
+  getByAccessibilityId(id: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
     return this.get(By.accessibilityId(id), timeout, message);
   }
 
-  getByName(name: string, timeout = 0, message = undefined) {
+  getByName(name: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
     return this.get(By.name(name), timeout, message);
   }
 
-  getById(id: string, timeout = 0, message = undefined) {
+  getById(id: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
     return this.get(By.id(id), timeout, message);
   }
 
-  getByclassName(className: string, timeout = 0, message = undefined) {
+  getByclassName(className: string, timeout?: number | undefined, message?: string | undefined): WebElementPromise {
     return this.get(By.className(className), timeout, message);
   }
 
-  sleep(ms: number) {
-    return this.driver_.sleep(ms);
+  sleep(ms: number): Promise<void> {
+    if (this.webDriver)
+      return this.webDriver.sleep(ms);
+    throw new Error("no valid connection");
   }
-  quit() {
-    return this.driver_.quit();
+
+  seleniumDriver(): WebDriver {
+    if (this.webDriver)
+      return this.webDriver;
+    throw new Error("no valid connection");
   }
+
+  lastError() {
+    return this.error_;
+  }
+
+  start(): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      new Builder()
+        .usingServer(this.url_)
+        .withCapabilities(this.capabilities_)
+        .build()
+        .then(driver => { this.webDriver = driver })
+        .catch(e => { this.error_ = e; throw e; });
+    });
+  }
+
+  stop(): Promise<void> {
+    return new Promise<void>((resolve) => {
+      this.webDriver && this.webDriver
+        .quit()
+        .then(() => resolve())
+        .catch(e => { this.error_ = e; throw e });
+      resolve();
+    });
+  }
+
+  restart(): Promise<void> {
+    return this._restart();
+  }
+
+  private async _restart() {
+    await this.stop().catch(); //ignore stop error
+    await this.start();
+  }
+
+  private capabilities_: Capabilities | {};
+  private error_?: any;
+  private url_: string
+  private webDriver?: WebDriver;
+
+  constructor(capabilities: Capabilities | {}, url: string = "http://localhost:4723/wd/hub") {
+    this.capabilities_ = capabilities;
+    this.url_ = url;
+  }
+
+  isActive(): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      this.webDriver && this.webDriver
+        .getSession()
+        .then(() => resolve(true), reason => resolve(false))
+      resolve(false);
+    });
+  }
+}
+
+export function createAppiumTestFixture(capabilities: Capabilities | {}, url?: string): IAppiumDriver {
+  return new AppiumDriver(capabilities, url);
 }
