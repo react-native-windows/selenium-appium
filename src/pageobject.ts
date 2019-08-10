@@ -7,7 +7,7 @@ import { WebDriver, WebElementCondition, By } from "selenium-webdriver";
 import { IAppiumDriver } from './appiumdriver';
 
 export interface IPageObject {
-  elementExists(by: By, timeout?: number): Promise<boolean>;
+  elementExists(by: By): Promise<boolean>;
   clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T>;
   gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T>;
   isReadyConditions(): WebElementCondition[];
@@ -51,12 +51,12 @@ export class PageObject implements IPageObject {
 
   protected appiumDriver: IAppiumDriver;
 
-  constructor(dirver: IAppiumDriver, timeout?: number) {
+  constructor(driver: IAppiumDriver, timeout?: number) {
     this.timeout = timeout;
-    this.appiumDriver = dirver;
+    this.appiumDriver = driver;
   }
 
-  elementExists(by: By, timeout?: number): Promise<boolean> {
+  elementExists(by: By): Promise<boolean> {
     return new Promise<boolean>(resolve =>
       this.appiumDriver.seleniumDriver().findElement(by)
         .then(() => resolve(true))
