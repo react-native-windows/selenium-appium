@@ -16,8 +16,7 @@ interface IAppiumWaitUntilFound {
   getByclassName(className: string, timeout?: number, message?: string): WebElementPromise;
 }
 
-export interface IAppiumDriver extends IAppiumWaitUntilFound 
-{
+export interface IAppiumDriver extends IAppiumWaitUntilFound {
   start(): Promise<void>;
   stop(): Promise<void>;
   restart(): Promise<void>;
@@ -67,22 +66,22 @@ class AppiumDriver implements IAppiumDriver {
   }
 
   start(): Promise<void> {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve, reject) => {
       new Builder()
         .usingServer(this.url_)
         .withCapabilities(this.capabilities_)
         .build()
         .then(driver => { this.webDriver = driver; resolve(); })
-        .catch(e => { this.error_ = e; throw e; });
+        .catch(e => { this.error_ = e; reject(e) });
     });
   }
 
   stop(): Promise<void> {
-    return new Promise<void>(resolve => {
+    return new Promise<void>((resolve, reject) => {
       this.webDriver && this.webDriver
         .quit()
         .then(() => resolve())
-        .catch(e => { this.error_ = e; throw e });
+        .catch(e => { this.error_ = e; reject(e) });
       resolve();
     });
   }

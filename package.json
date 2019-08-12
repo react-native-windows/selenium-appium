@@ -1,6 +1,6 @@
 {
   "name": "selenium-appium",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A brdige to make selenium-webdriver to drive appium to do native app testing",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
