@@ -6,21 +6,21 @@
 'use strict';
 import { By } from 'selenium-webdriver'
 
-export class By2 {
-  static id(id: string) {
+export class  By2 extends By {
+  static nativeId(id: string) {
     return new By('id', id);
   }
 
-  static accessibilityId(id: string) {
+  static nativeAccessibilityId(id: string) {
     return new By('accessibility id', id);
   }
 
   // @ts-ignore: error TS2699: Static property 'name' conflicts with built-in property 'Function.name'
-  static name(name: string) {
+  static nativeName(name: string) {
     return new By('name', name);
   }
 
-  static className(name: string) {
+  static nativeClassName(name: string) {
     return new By('class name', name);
   }
 }

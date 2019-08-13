@@ -4,12 +4,12 @@
  */
 
 import { WebDriver, WebElementCondition, By } from "selenium-webdriver";
-import { IAppiumDriver } from './appiumdriver';
+import { IWebDriver2 } from './webdriver2';
 
 export interface IPageObject {
   elementExists(by: By): Promise<boolean>;
-  clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T>;
-  gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T>;
+  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T>;
+  waitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T>;
   isReadyConditions(): WebElementCondition[];
   waitUntilReady(timeout?: number): Promise<void>;
 };
@@ -18,18 +18,18 @@ function getInstance<T>(type: (new (...args: any[]) => T), ...args: any[]): T {
   return new type(...args);
 };
 
-export function gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, timeout?: number): Promise<T> {
+export function waitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IWebDriver2, timeout?: number): Promise<T> {
   const page = getInstance(type, driver);
   return new Promise<T>((resolve) => {
     page.waitUntilReady(timeout).then(() => resolve(page))
   });
 }
 
-export function clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IAppiumDriver, by: By, timeout?: number): Promise<T> {
+export function clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IWebDriver2, by: By, timeout?: number): Promise<T> {
   return new Promise<T>((resolve) => {
-    driver.get(by, timeout)
+    driver.getBy(by, timeout)
       .then(el => { return el.click(); })
-      .then(() => { return gotoPage(type, driver, timeout); })
+      .then(() => { return waitForPage(type, driver, timeout); })
       .then(page => resolve(page));
   });
 }
@@ -49,9 +49,9 @@ export class PageObject implements IPageObject {
     this.defaultTimeout = ms;
   }
 
-  protected appiumDriver: IAppiumDriver;
+  protected appiumDriver: IWebDriver2;
 
-  constructor(driver: IAppiumDriver, timeout?: number) {
+  constructor(driver: IWebDriver2, timeout?: number) {
     this.timeout = timeout;
     this.appiumDriver = driver;
   }
@@ -77,12 +77,12 @@ export class PageObject implements IPageObject {
     }
   }
 
-  clickAndGotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T> {
-    return clickAndGotoPage(type, this.appiumDriver, by, this.getTimeout(timeout));
+  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T> {
+    return clickAndWaitForPage(type, this.appiumDriver, by, this.getTimeout(timeout));
   }
 
-  gotoPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T> {
-    return gotoPage(type, this.appiumDriver, this.getTimeout(timeout));
+  waitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T> {
+    return waitForPage(type, this.appiumDriver, this.getTimeout(timeout));
   }
 
   private static async  waitForConditions(driver: WebDriver, conditions: WebElementCondition[], timeout?: number) {

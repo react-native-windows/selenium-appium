@@ -4,6 +4,6 @@
  */
 
 export { By2 } from './by2';
-export { IAppiumDriver, createAppiumWebDriver } from './appiumdriver'
-export { windowsNativeAppCapabilities } from './appiumdriver.windows'
-export { IPageObject, PageObject, gotoPage, clickAndGotoPage } from './pageobject'
+export { IWebDriver2, createWebDriver2 } from './webdriver2'
+export { windowsNativeAppCapabilities } from './webdriver2.windows'
+export { IPageObject, PageObject, waitForPage, clickAndWaitForPage } from './pageobject'

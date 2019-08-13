@@ -11,17 +11,18 @@
   "author": "Canhua Li <licanhua@live.com> (https://github.com/licanhua)",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^24.0.17",
     "@babel/core": "^7.5.5",
     "@babel/preset-env": "^7.5.5",
     "@babel/preset-typescript": "^7.3.3",
     "@types/selenium-webdriver": "^4.0.1",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
-    "selenium-appium": "^0.0.3",
+    "selenium-appium": "^0.0.6",
     "selenium-webdriver": "^4.0.0-alpha.4",
     "typescript": "^3.5.3"
   },
   "dependencies": {
-    "@types/jest": "^24.0.17"
+
   }
 }
