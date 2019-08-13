@@ -3,12 +3,13 @@
  * Licensed under the MIT License.
  */
 
-import { WebDriver, WebElementCondition, By } from "selenium-webdriver";
+import { WebDriver, WebElementCondition, Locator } from "selenium-webdriver";
 import { IWebDriver2 } from './webdriver2';
 
 export interface IPageObject {
-  elementExists(by: By): Promise<boolean>;
-  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T>;
+  clickOn(locator: Locator): Promise<void>;
+  elementExists(locator: Locator): Promise<boolean>;
+  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), locator: Locator, timeout?: number): Promise<T>;
   waitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T>;
   isReadyConditions(): WebElementCondition[];
   waitUntilReady(timeout?: number): Promise<void>;
@@ -25,9 +26,9 @@ export function waitForPage<T extends IPageObject>(type: (new (...args: any[]) =
   });
 }
 
-export function clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IWebDriver2, by: By, timeout?: number): Promise<T> {
+export function clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), driver: IWebDriver2, locator: Locator, timeout?: number): Promise<T> {
   return new Promise<T>((resolve) => {
-    driver.getBy(by, timeout)
+    driver.getBy(locator, timeout)
       .then(el => { return el.click(); })
       .then(() => { return waitForPage(type, driver, timeout); })
       .then(page => resolve(page));
@@ -35,6 +36,10 @@ export function clickAndWaitForPage<T extends IPageObject>(type: (new (...args: 
 }
 
 export class PageObject implements IPageObject {
+  clickOn(locator: Locator): Promise<void> {
+    return this.webDriver2.getBy(locator).click();
+  }
+
   private static defaultTimeout: number = 20000; //ms
   private timeout?: number;
   private getTimeout(timeout?: number): number {
@@ -49,16 +54,16 @@ export class PageObject implements IPageObject {
     this.defaultTimeout = ms;
   }
 
-  protected appiumDriver: IWebDriver2;
+  protected webDriver2: IWebDriver2;
 
   constructor(driver: IWebDriver2, timeout?: number) {
     this.timeout = timeout;
-    this.appiumDriver = driver;
+    this.webDriver2 = driver;
   }
 
-  elementExists(by: By): Promise<boolean> {
+  elementExists(locator: Locator): Promise<boolean> {
     return new Promise<boolean>(resolve =>
-      this.appiumDriver.seleniumDriver().findElement(by)
+      this.webDriver2.seleniumDriver().findElement(locator)
         .then(() => resolve(true))
         .catch(() => resolve(false))
     );
@@ -69,7 +74,7 @@ export class PageObject implements IPageObject {
   }
 
   waitUntilReady(timeout?: number): Promise<void> {
-    const webDriver = this.appiumDriver.seleniumDriver();
+    const webDriver = this.webDriver2.seleniumDriver();
     if (webDriver) {
       return PageObject.waitForConditions(webDriver, this.isReadyConditions(), this.getTimeout(timeout));
     } else {
@@ -77,12 +82,12 @@ export class PageObject implements IPageObject {
     }
   }
 
-  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), by: By, timeout?: number): Promise<T> {
-    return clickAndWaitForPage(type, this.appiumDriver, by, this.getTimeout(timeout));
+  clickAndWaitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), locator: Locator, timeout?: number): Promise<T> {
+    return clickAndWaitForPage(type, this.webDriver2, locator, this.getTimeout(timeout));
   }
 
   waitForPage<T extends IPageObject>(type: (new (...args: any[]) => T), timeout?: number): Promise<T> {
-    return waitForPage(type, this.appiumDriver, this.getTimeout(timeout));
+    return waitForPage(type, this.webDriver2, this.getTimeout(timeout));
   }
 
   private static async  waitForConditions(driver: WebDriver, conditions: WebElementCondition[], timeout?: number) {

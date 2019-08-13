@@ -1,6 +1,6 @@
 import { Executor } from "selenium-webdriver/lib/command";
 
-export const MobileExtensionCommand = {
+export const MobileJSONWireCommand = {
   GET_NETWORK_CONDITION: 'getNetworkConnection',
   SET_NETWORK_CONDITION: 'setNetworkConnection',
 };
@@ -13,14 +13,18 @@ export enum NetworkConnectionType {
   None = 0
 }
 
-export function configureExecutor(executor: Executor) {
+export type NetworkConnectionParam = {
+  type: NetworkConnectionType
+}
+
+export function configureMobileJSONWireExtension(executor: Executor) {
   executor.defineCommand(
-    MobileExtensionCommand.GET_NETWORK_CONDITION,
+    MobileJSONWireCommand.GET_NETWORK_CONDITION,
     'GET',
-    '/session/:sessionid/network_connection');
+    '/session/:sessionId/network_connection');
 
   executor.defineCommand(
-    MobileExtensionCommand.SET_NETWORK_CONDITION,
+    MobileJSONWireCommand.SET_NETWORK_CONDITION,
     'POST',
-    '/session/:sessionid/network_connection');
+    '/session/:sessionId/network_connection');
 }
