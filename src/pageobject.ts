@@ -26,7 +26,7 @@ export class PageObject {
   }
 
   waitForPageLoaded(timeout?: number) {
-    const theTimeout = timeout ? timeout : Config.getWaitforPageTimeout();
+    const theTimeout = timeout ? timeout : Config.getWaitForPageTimeout();
     this.driver.wait2(
       () => {
         return this.isPageLoaded();

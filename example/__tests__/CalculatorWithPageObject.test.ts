@@ -20,7 +20,7 @@ afterAll(() => {
 });
 
 
-describe('Addition', () => {
+describe('Calulator Test', () => {
   // Applies only to tests in this describe block
   beforeEach(async () => {
     await CalculatorPage.waitForPageLoaded();
@@ -40,8 +40,6 @@ describe('Addition', () => {
     // Find the buttons by their names using XPath and click them in sequence to perform 9 x 9 = 81
     expect(await CalculatorPage.multiply('9', '9')).toBe('81');
   });
-
-
 
   test('Subtraction', async () => {
     // Find the buttons by their accessibility ids using XPath and click them in sequence to perform 9 - 1 = 8

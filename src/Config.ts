@@ -16,10 +16,10 @@ class Configuration {
     return this.waitforTimeout;
   }
 
-  setWaitforPageTimeout(timeout: number) {
+  setWaitForPageTimeout(timeout: number) {
     this.waitforPageTimeout = timeout;
   }
-  getWaitforPageTimeout(): number {
+  getWaitForPageTimeout(): number {
     return this.waitforPageTimeout;
   }
 };
