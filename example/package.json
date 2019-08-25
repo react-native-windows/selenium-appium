@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "appium": "appium",
-    "jest": "jest"
+    "jest": "jest --maxWorkers=1"
   },
   "keywords": [],
   "author": "Canhua Li <licanhua@live.com> (https://github.com/licanhua)",
@@ -18,11 +18,9 @@
     "@types/selenium-webdriver": "^4.0.1",
     "babel-jest": "^24.8.0",
     "jest": "^24.8.0",
-    "selenium-appium": "^0.0.8",
+    "selenium-appium": "^0.0.10",
     "selenium-webdriver": "^4.0.0-alpha.4",
-    "typescript": "^3.5.3"
-  },
-  "dependencies": {
-
+    "typescript": "^3.5.3",
+    "appium":"1.14.2"
   }
 }
