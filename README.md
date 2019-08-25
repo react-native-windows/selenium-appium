@@ -16,7 +16,7 @@ selenium-appium is [selenium-webdriver](https://seleniumhq.github.io/selenium/do
 npm i selenium-appium --save-dev
 ```
 
-### By2
+### [By2 example](https://github.com/react-native-windows/selenium-appium/blob/master/example/__tests__/By2.test.ts)
 - By2 is a subclass of selenium-webdriver.By. So you can use it anywhere which selenium-webdriver provides.
 - Also By2 implements the WebElement interface, so you can call click and other element operation directly.
 - No webdriver.wait needed. Instead of findElement, By2 itself loop until element is located before actual click happens.
@@ -46,7 +46,7 @@ npm i selenium-appium --save-dev
     });
 ```
 
-### driver
+### [driver example](https://github.com/react-native-windows/selenium-appium/blob/master/example/__tests__/Driver2.test.ts)
 - driver is a wrapper of WebDriver which selenium-webdriver provides. 
 - Implements all functions of WebDriver of selenium-webdriver.
 - It provides the default driver for By2.
@@ -82,7 +82,7 @@ startWithWebDriver allows you to attach the driver to existing WebDriver if capa
     });
 ```
 
-###
+### [PageObject example](https://github.com/react-native-windows/selenium-appium/blob/master/example/__tests__/CalculatorWithPageObject.test.ts)
 [PageObject](https://github.com/SeleniumHQ/selenium/wiki/PageObjects) reduces the amount of duplicated code and easy to maintain.
 1. get in typescript would make you always get new instance of By2. For example, get resultTextBox()
 2. waitForPageLoaded pairs with isPageLoaded. You only need to overload isPageLoaded. waitForPageLoaded would poll until isPageLoaded is true or timeout.
@@ -178,7 +178,7 @@ use the PageObject
   });
 ```
 
-### Configuration
+### [Configuration example](https://github.com/react-native-windows/selenium-appium/blob/master/example/__tests__/Times.ts)
   There are two global timers: waitforPageTimeout and waitforTimeout.
 
   waitforTimeout is used by By2. When call any WebElement function of By2, it loops until the element is located
