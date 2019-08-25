@@ -5,7 +5,7 @@
 
 'use strict';
 
-export function windowsNativeAppCapabilities(appName: string) {
+export function windowsAppDriverCapabilities(appName: string) {
   return {
     browserName: '',
     platformName: 'windows',

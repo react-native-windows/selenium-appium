@@ -3,7 +3,10 @@
  * Licensed under the MIT License.
  */
 
-export { By2 } from './by2';
-export { WebDriver2, createWebDriver2 } from './webdriver2'
-export { windowsNativeAppCapabilities } from './webdriver2.windows'
-export { IPageObject, PageObject, waitForPage, clickAndWaitForPage } from './pageobject'
+'use strict';
+
+export { By2 } from './By2'
+export { driver, WebDriver2 } from './Driver'
+export { PageObject } from './PageObject'
+export { windowsAppDriverCapabilities } from './WinAppDriver'
+export { Config } from './Config'
