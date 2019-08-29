@@ -1,9 +1,10 @@
 ## Example to do Calulator automation on Windows
-1. cd to example directory and install packages.
+1. Download and install WinAppDriver: https://github.com/microsoft/WinAppDriver/releases/download/v1.1/WindowsApplicationDriver.msi
+2. cd to example directory and install packages.
 
 `yarn install` or `npm install`
 
-2. start appium
+3. start appium
 
 `yarn run appium` or `npm run appium`
 
@@ -13,6 +14,6 @@ expect output
 [Appium] Appium REST http interface listener started on 0.0.0.0:4723
 ```
 
-3. run jest test
+4. run jest test
 
 `yarn run jest` or `npm run jest`
