@@ -8,6 +8,11 @@ steps:
 - script: echo Hello, world!
   displayName: 'Run example'
 
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Get-AppxPackage *calculator*'
+    
 - task: CmdLine@2
   displayName: yarn install
   inputs:
