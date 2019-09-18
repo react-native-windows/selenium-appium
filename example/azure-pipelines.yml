@@ -1,0 +1,35 @@
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-2019'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Run example'
+
+- task: CmdLine@2
+  displayName: yarn install
+  inputs:
+    script: yarn install
+    workingDirectory: example
+
+- task: Windows Application Driver@0
+  inputs:
+    OperationType: 'Start'
+    WADArguments: '127.0.0.1 4723/wd/hub'
+
+- task: CmdLine@2
+  displayName: yarn run jest
+  inputs:
+    script: yarn run jest
+    workingDirectory: example
+
+- task: Windows Application Driver@0
+  inputs:
+    OperationType: 'Stop'
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/TEST-*.xml'
