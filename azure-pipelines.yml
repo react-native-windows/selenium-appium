@@ -1,5 +1,7 @@
-trigger:
-- master
+trigger: none # will disable CI builds entirely
+
+pr:
+  - master
 
 pool:
   vmImage: 'windows-2019'
