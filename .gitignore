@@ -7,3 +7,5 @@ node_modules/
 dist/
 
 yarn.lock
+
+example/test-report.xml
