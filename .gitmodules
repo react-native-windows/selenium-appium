@@ -1,3 +1,0 @@
-[submodule "calculator"]
-	path = calculator
-	url = https://github.com/microsoft/calculator.git
