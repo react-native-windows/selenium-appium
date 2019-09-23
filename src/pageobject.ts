@@ -5,8 +5,8 @@
 
 'use strict';
 
-import { driver, WebDriver2 } from "./Driver";
-import { Config } from './Config'
+import { driver, WebDriver2 } from "./driver";
+import { Config } from './config'
 
 export class PageObject {
   private webDriver2_?: WebDriver2;
