@@ -1,14 +1,13 @@
+/**
+ * Copyright (c) Microsoft Corporation. All rights reserved.
+ * Licensed under the MIT License.
+ */
+
 import { By2, driver, WebDriver2 } from 'selenium-appium'
 import { Builder, until } from 'selenium-webdriver';
+import { capabilities } from '../Setup'
 
 jest.setTimeout(50000);
-
-const capabilities = {
-    browserName: '',
-    platformName: 'windows',
-    deviceName: 'WindowsPC',
-    app: 'Microsoft.WindowsCalculator_8wekyb3d8bbwe!App'
-}
 
 const url = 'http://localhost:4723/wd/hub'
 
