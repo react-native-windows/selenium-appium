@@ -28,4 +28,10 @@ steps:
     connection: 'react-native-windows'
     userRepository: 'react-native-windows/CalculatorPackage'
     defaultVersionType: 'latest'
-    downloadPath: '$(System.ArtifactsDirectory)'
+    # downloadPath: '$(System.ArtifactsDirectory)'
+
+- task: ExtractFiles@1
+  inputs:
+    archiveFilePatterns: '*.zip'
+    destinationFolder: 'TestApp'
+    cleanDestinationFolder: true
