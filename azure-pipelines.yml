@@ -50,3 +50,30 @@ steps:
   inputs:
     scriptName: 'TestApp\Calculator_$(PackageManifest)_Test\Add-AppDevPackage.ps1'
     arguments: '-NonInteractive -Force:$true  -Verb RunAs'
+
+- task: PowerShell@2
+  displayName: 'Replace the AppID'
+  inputs:
+    targetType: 'inline'
+    script: '((Get-Content -path-Raw) -replace ''Microsoft.WindowsCalculator_8wekyb3d8bbwe!App'',''Microsoft.WindowsCalculator.Dev_8wekyb3d8bbwe!App'') | Set-Content -Path example/Setup.ts'
+
+- task: CmdLine@2
+  inputs:
+    script: 'type  example/Setup.ts'
+
+- task: DeleteFiles@1
+  inputs:
+    SourceFolder: 'example\node_modules\selenium-appium\dist'
+    Contents: '*'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: 'dist'
+    Contents: '**'
+    TargetFolder: 'example\node_modules\selenium-appium\dist'
+    OverWrite: true
+
+- task: CmdLine@2
+  inputs:
+    script: 'yarn run jest'
+    workingDirectory: 'example'
