@@ -6,6 +6,4 @@ node_modules/
 #Exclude tsc generated files
 dist/
 
-yarn.lock
-
 example/test-report.xml

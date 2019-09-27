@@ -98,3 +98,9 @@ steps:
   inputs:
     OperationType: 'Stop'
   condition: succeededOrFailed()
+
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: 'example/test-report.xml'
+  condition: succeededOrFailed()
