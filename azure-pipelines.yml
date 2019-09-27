@@ -28,10 +28,25 @@ steps:
     connection: 'react-native-windows'
     userRepository: 'react-native-windows/CalculatorPackage'
     defaultVersionType: 'latest'
-    # downloadPath: '$(System.ArtifactsDirectory)'
+    downloadPath: '$(System.ArtifactsDirectory)'
 
 - task: ExtractFiles@1
   inputs:
-    archiveFilePatterns: '*.zip'
+    archiveFilePatterns: '$(System.ArtifactsDirectory)/*.zip'
     destinationFolder: 'TestApp'
     cleanDestinationFolder: true
+
+- task: PowerShell@1
+  displayName: 'Install Calculator Cert'
+  inputs:
+    scriptType: inlineScript
+    arguments: '-NonInteractive -Verb RunAs'
+    inlineScript: |
+      $file = ( Get-ChildItem -Path TestApp\Calculator_$(PackageManifest)_Test\Calculator_$(PackageManifest)_x64.cer )
+      $file | Import-Certificate -CertStoreLocation cert:\LocalMachine\Root
+
+- task: PowerShell@1
+  displayName: 'Install Calculator Packages'
+  inputs:
+    scriptName: 'TestApp\Calculator_$(PackageManifest)_Test\Add-AppDevPackage.ps1'
+    arguments: '-NonInteractive -Force:$true  -Verb RunAs'
