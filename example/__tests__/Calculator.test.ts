@@ -4,14 +4,14 @@
  */
 
 import { driver, By2, windowsAppDriverCapabilities } from 'selenium-appium'
+import { calculatorAppId } from '../Setup'
 
 jest.setTimeout(50000);
 
-const calculatorAppId = 'Microsoft.WindowsCalculator_8wekyb3d8bbwe!App'
 const capabilites = windowsAppDriverCapabilities(calculatorAppId)
 
 beforeAll(() => {
-  return driver.startWithCapabilities(capabilites); 
+  return driver.startWithCapabilities(capabilites);
 });
 
 afterAll(() => {
