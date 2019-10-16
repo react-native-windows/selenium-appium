@@ -234,3 +234,5 @@ An example of jest, selenium-webdriver and winappdriver integration
 - [Automated Windows UI testing by Jest + selenium-appium + selenium-webdriver + WinAppDriver](https://medium.com/@licanhua/automated-windows-ui-testing-by-jest-selenium-appium-selenium-webdriver-winappdriver-6cb708121d71)
 - [Inspecting UI Elements for WinAppDriver automation using Appium Desktop](https://medium.com/@licanhua/inspecting-ui-elements-for-winappdriver-automation-using-appium-desktop-8f178b2d0d6c)
 
+## License
+The selenium-appium and all newly contributed code is provided under the [MIT License](LICENSE). 
