@@ -3,9 +3,9 @@
 
 
 "@types/selenium-webdriver@^4.0.1":
-  version "4.0.2"
-  resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-4.0.2.tgz#620419110e545bf54237a91161a8356bc4c65db3"
-  integrity sha512-N8u76LXU6KmxdfKEhOvK/dNtWUg7aeXrQVRRhVqO1V4gYN7zL6SPPJC3GmauyxYnJtsG1BCegQK77pRwieLVhw==
+  version "4.0.7"
+  resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-4.0.7.tgz#ae235f7981ce3eaa7b599bbf11f3ae4ef64cf9ff"
+  integrity sha512-IlHGwyTzzuphPZBTalJ0LmpS1wguHYODpJuo01xvbtPQy+o7DpCNZARQY7YyvbHC0EzcleoKFE8EX/BHIGa9Fg==
 
 typescript@^3.5.3:
   version "3.5.3"
