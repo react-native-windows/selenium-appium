@@ -15,8 +15,8 @@ class CalculatorPage extends PageObject {
   get clearButton() { return By2.nativeName('Clear'); }
   get plusButton() { return By2.nativeName('Plus'); }
   get divideButton() { return By2.nativeAccessibilityId('divideButton'); }
-  get multiplyButton() { return By2.nativeXpath("//Button[@Name='Multiply by']") }
-  get minusButton() { return By2.nativeXpath("//Button[@AutomationId=\"minusButton\"]"); }
+  get multiplyButton() { return By2.nativeAccessibilityId("multiplyButton") }
+  get minusButton() { return By2.nativeAccessibilityId("minusButton"); }
   get button0() { return By2.nativeAccessibilityId('num0Button'); }
   get button1() { return By2.nativeAccessibilityId('num1Button'); }
   get button2() { return By2.nativeAccessibilityId('num2Button'); }

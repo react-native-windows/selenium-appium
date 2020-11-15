@@ -26,7 +26,7 @@ async function getCalculatorResultText() {
 describe('Addition', () => {
   // Applies only to tests in this describe block
   beforeEach(() => {
-    return By2.nativeName('Clear').clear();
+    return By2.nativeName('Clear').click();
   });
   test('Addition', async () => {
     // Find the buttons by their names and click them in sequence to perform 1 + 7 = 8

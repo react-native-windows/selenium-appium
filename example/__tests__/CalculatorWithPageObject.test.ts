@@ -24,7 +24,7 @@ describe('Calulator Test', () => {
   // Applies only to tests in this describe block
   beforeEach(async () => {
     await CalculatorPage.waitForPageLoaded();
-    await CalculatorPage.clearButton.clear();
+    await CalculatorPage.clearButton.click();
   });
   test('Addition', async () => {
     // Find the buttons by their names and click them in sequence to perform 1 + 7 = 8
