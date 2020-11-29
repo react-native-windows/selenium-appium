@@ -211,7 +211,7 @@ export class WebDriver2 implements IWebDriver2 {
     this.webDriver = webDriver;
   }
 
-  startWithCapabilities(capabilities: {} | Capabilities, url: string = "http://localhost:4723/wd/hub"): Promise<void> {
+  startWithCapabilities(capabilities: {} | Capabilities, url: string = "http://localhost:4723"): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (capabilities) {
         new Builder()
