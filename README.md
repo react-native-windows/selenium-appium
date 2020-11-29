@@ -3,7 +3,7 @@ selenium-appium is [selenium-webdriver](https://seleniumhq.github.io/selenium/do
 
 [![NPM version](https://badge.fury.io/js/selenium-appium.svg)](https://npmjs.org/package/selenium-appium)
 [![Monthly Downloads](https://img.shields.io/npm/dm/selenium-appium.svg)](https://npmjs.org/package/selenium-appium)
-[![Build Status](https://dev.azure.com/ReactNativeWindows/selenium-appium/_apis/build/status/PR?branchName=master)](https://dev.azure.com/ReactNativeWindows/selenium-appium/_build/latest?definitionId=3&branchName=master)
+[![Build Status](https://dev.azure.com/licanhua/selenium-appium/_apis/build/status/react-native-windows.selenium-appium?branchName=master)](https://dev.azure.com/licanhua/selenium-appium/_build/latest?definitionId=4&branchName=master)
 
 ## Break changes
 1. selenium-appium@1.0.0 The default URL is changed from `http://localhost:4723/wd/hub` to `http://localhost:4723`. The goal is to remove appium from the project and use [winappdriver](https://www.npmjs.com/package/winappdriver) to launch and stop WinAppDriver 
