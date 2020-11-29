@@ -4,7 +4,7 @@ import { capabilities } from '../Setup';
 
 jest.setTimeout(50000);
 
-const url = 'http://localhost:4723/wd/hub'
+const url = 'http://localhost:4723'
 
 describe('driver', () => {
     test("simple webdriver2, and driver create from WebDriver", async () => {

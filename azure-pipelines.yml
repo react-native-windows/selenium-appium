@@ -86,7 +86,7 @@ steps:
 - task: Windows Application Driver@0
   inputs:
     OperationType: 'Start'
-    WADArguments: 127.0.0.1 4723/wd/hub
+    WADArguments: 127.0.0.1 4723
     AgentResolution: 1080p
     
 - task: CmdLine@2

@@ -5,6 +5,9 @@ selenium-appium is [selenium-webdriver](https://seleniumhq.github.io/selenium/do
 [![Monthly Downloads](https://img.shields.io/npm/dm/selenium-appium.svg)](https://npmjs.org/package/selenium-appium)
 [![Build Status](https://dev.azure.com/ReactNativeWindows/selenium-appium/_apis/build/status/PR?branchName=master)](https://dev.azure.com/ReactNativeWindows/selenium-appium/_build/latest?definitionId=3&branchName=master)
 
+## Break changes
+1. selenium-appium@1.0.0 The default URL is changed from `http://localhost:4723/wd/hub` to `http://localhost:4723`. The goal is to remove appium from the project and use [winappdriver](https://www.npmjs.com/package/winappdriver) to launch and stop WinAppDriver 
+
 ### Features
 1. A bridge to make selenium-webdriver to drive appium for native app automation. Implement [Mobile JSON Wire Protocol Specification](https://github.com/SeleniumHQ/mobile-spec/blob/master/spec-draft.md) locator which selenium-webdriver doesn't support.
 2. Supports PageObject Pattern for selenium-webdriver

@@ -9,7 +9,7 @@ import { capabilities } from '../Setup'
 
 jest.setTimeout(50000);
 
-const url = 'http://localhost:4723/wd/hub'
+const url = 'http://localhost:4723'
 
 describe('By2', () => {
     test("By2 used in selenium-webdriver.WebDriver", async () => {

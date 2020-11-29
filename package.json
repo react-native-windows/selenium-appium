@@ -1,6 +1,6 @@
 {
   "name": "selenium-appium",
-  "version": "0.0.16",
+  "version": "1.0.0",
   "description": "A selenium-webdriver extension to support native app testing by Mobile JSON Wire Protocol which appium supports, also provides easy wait for element for pages or navigation among pages, and supports PageObject pattern",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -23,7 +23,7 @@
   "license": "MIT",
   "devDependencies": {
     "@types/selenium-webdriver": "^4.0.10",
-    "typescript": "^4.0.5"
+    "typescript": "^4.1.2"
   },
   "peerDependencies": {
     "selenium-webdriver": "^4.0.0-alpha.7"
