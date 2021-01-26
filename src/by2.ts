@@ -4,7 +4,7 @@
  */
 
 'use strict';
-
+// eslint-disable-next-line import/no-unresolved
 import { By, Locator, WebDriver, ISize, IRectangle, ILocation, until, IWebElementId, WebElement, WebElementPromise, ThenableWebDriver, FileDetector, Session, Actions, WebElementCondition, Condition, Options, Navigation, TargetLocator } from 'selenium-webdriver'
 import { driver, WebDriver2 } from './Driver'
 import { Config } from './Config'

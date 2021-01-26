@@ -28,6 +28,7 @@
     "@typescript-eslint/parser": "^4.14.1",
     "eslint": "^7.18.0",
     "eslint-plugin-import": "^2.22.1",
+    "selenium-webdriver": "^4.0.0-alpha.8",
     "typescript": "^4.1.2"
   },
   "peerDependencies": {

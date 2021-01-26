@@ -6,8 +6,8 @@
 'use strict';
 
 class Configuration {
-  private waitforTimeout: number = 10000;
-  private waitforPageTimeout: number = 30000;
+  private waitforTimeout = 10000;
+  private waitforPageTimeout = 30000;
 
   setWaitForTimeout(timeout: number) {
     this.waitforTimeout = timeout;
@@ -22,6 +22,6 @@ class Configuration {
   getWaitForPageTimeout(): number {
     return this.waitforPageTimeout;
   }
-};
+}
 
 export const Config = new Configuration();
