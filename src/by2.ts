@@ -6,8 +6,8 @@
 'use strict';
 
 import { By, Locator, WebDriver, ISize, IRectangle, ILocation, until, IWebElementId, WebElement, WebElementPromise, ThenableWebDriver, FileDetector, Session, Actions, WebElementCondition, Condition, Options, Navigation, TargetLocator } from 'selenium-webdriver'
-import { driver, WebDriver2 } from './driver'
-import { Config } from './config'
+import { driver, WebDriver2 } from './Driver'
+import { Config } from './Config'
 
 interface IWebElement extends WebElement {
 

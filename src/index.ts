@@ -6,7 +6,7 @@
 'use strict';
 
 export { By2 } from './by2'
-export { driver, WebDriver2 } from './driver'
+export { driver, WebDriver2 } from './Driver'
 export { PageObject } from './pageobject'
-export { windowsAppDriverCapabilities } from './winappdriver'
-export { Config } from './config'
+export { windowsAppDriverCapabilities } from './WinAppDriver'
+export { Config } from './Config'
