@@ -4,7 +4,10 @@
  */
 
 'use strict';
+// eslint-disable-next-line import/no-unresolved
 import { Locator, WebDriver, Builder, until, Capabilities, WebElement, WebElementPromise, ThenableWebDriver, FileDetector, Session, Actions, WebElementCondition, Condition, Options, Navigation, TargetLocator } from 'selenium-webdriver'
+
+// eslint-disable-next-line import/no-unresolved
 import { Command, Executor } from 'selenium-webdriver/lib/command'
 
 interface IWebDriver2 extends WebDriver {
@@ -211,7 +214,7 @@ export class WebDriver2 implements IWebDriver2 {
     this.webDriver = webDriver;
   }
 
-  startWithCapabilities(capabilities: {} | Capabilities, url: string = "http://localhost:4723"): Promise<void> {
+  startWithCapabilities(capabilities: {} | Capabilities, url = "http://localhost:4723"): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       if (capabilities) {
         new Builder()

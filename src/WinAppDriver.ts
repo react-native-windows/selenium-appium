@@ -12,4 +12,4 @@ export function windowsAppDriverCapabilities(appName: string) {
     deviceName: 'WindowsPC',
     app: appName
   }
-};
+}

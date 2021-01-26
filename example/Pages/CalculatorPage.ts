@@ -29,7 +29,7 @@ class CalculatorPage extends PageObject {
   get button9() { return By2.nativeAccessibilityId('num9Button'); }
 
   private async pressKeys(keys: string) {
-    for (var key of keys) {
+    for (const key of keys) {
       await By2.nativeAccessibilityId('num' + key + 'Button').click();
     }
   }
