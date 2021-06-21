@@ -71,9 +71,9 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/selenium-webdriver@^4.0.10":
-  version "4.0.11"
-  resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-4.0.11.tgz#740d1b3a47badec6784015ee8f3e89d3cb5fd985"
-  integrity sha512-VHv3kVxdploPZRa5Epsrgae9f8Wp0B+TVj3L93Yv0nB2RCRGRTKuhz/vRUZR4yItLqzdIxsxALe3qT3yqTAJTg==
+  version "4.0.14"
+  resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-4.0.14.tgz#9c3353347c71ecf175def0f241560d5d1f32466a"
+  integrity sha512-jDe75y7dXpGH5teJI1cgJOhnC7/MsfqgLWbu2TuzJSv1DDn6FgaghEnRxEAbsqEsTzXMTCrottAHVJsQxL8gUw==
 
 "@typescript-eslint/eslint-plugin@^4.14.1":
   version "4.14.1"
