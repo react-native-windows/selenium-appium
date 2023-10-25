@@ -1,4 +1,4 @@
-## Example to do Calulator automation on Windows
+## Example to do Calculator automation on Windows
 1. Download and install WinAppDriver: https://github.com/microsoft/WinAppDriver/releases
 2. cd to example directory and install packages.
 
